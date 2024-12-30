@@ -30,3 +30,15 @@ export const QUERY_STARTUP_DETAILS=defineQuery(
         image,
         pitch
     }`)
+
+export const QUERY_CHECK_AUTHOR=defineQuery(`
+        *[ _type == "author" && id == $id ][0]{
+        _id,
+        id,
+        name,
+        username,
+        email,
+        image,
+        bio
+    }
+    `)

@@ -5,6 +5,7 @@ import Search from "../../components/SearchComponent";
 import StartupCard from "../../components/StartupCard";
 import { StartupCardType } from "../../components/StartupCard";
 import { sanityFetch, SanityLive } from "@/sanity/lib/live";
+import { auth } from "@/auth";
 // type StartupCardType = {
 //   _id: number;
 //   title: string;
@@ -20,9 +21,11 @@ import { sanityFetch, SanityLive } from "@/sanity/lib/live";
 export default async function Home({ searchParams }: { searchParams: Promise<{ query?: string }> }) {
   const query = (await searchParams).query;
   const params ={search:query || null};
-  const posts = await client.fetch(QUERY_STARTUPS, params);
+  const posts = await client.withConfig({ useCdn: false }).fetch(QUERY_STARTUPS, params);
   // console.log(posts);
   // const {data:posts}=await sanityFetch(QUERY_STARTUPS);
+  const session=await auth()
+  console.log(session?.id)
   return (
     <>
       <section className="pink_container">
