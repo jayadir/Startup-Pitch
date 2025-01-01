@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Button } from './ui/button'
 import { Author, Startup } from '@/sanity/types'
+import { author } from '@/sanity/schemaTypes/author'
 export type StartupCardType = Omit<Startup, "author"> & { author?: Author }
 export default function StartupCard({ post }: { post: StartupCardType }) {
     const { title, description, category, image, _id } = post
@@ -25,7 +26,7 @@ export default function StartupCard({ post }: { post: StartupCardType }) {
                     <Link href={`/startup/${_id}`}> <h2 className='text-24-semibold line-clamp-1'>{title}</h2>     </Link>
                 </div>
                 <Link href={`/user/${post.author?._id}`}>
-                    <Image src="https://placehold.co/48x48" alt="placeholder" width={48} height={48} className='rounded-full' />
+                    <Image src={post.author?.image || 'https://placehold.co/48x48'} alt={post.author?.name || 'Default Author'} width={48} height={48} className='rounded-full' />
                 </Link>
             </div>
             <Link href={`/startup/${_id}`}>
